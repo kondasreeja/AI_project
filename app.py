@@ -3,17 +3,11 @@ import chromadb
 from sentence_transformers import SentenceTransformer
 import ollama
 
-
-# =====================================================
 # CONFIGURATION
-# =====================================================
 
 OLLAMA_MODEL = "llama3.2"
 
-
-# =====================================================
 # STREAMLIT PAGE
-# =====================================================
 
 st.set_page_config(
     page_title="AI Career Course Recommendation System",
@@ -21,16 +15,10 @@ st.set_page_config(
     layout="wide"
 )
 
-# =====================================================
-# LIGHT ELEGANT THEME
-# =====================================================
-
 st.markdown("""
 <style>
 
-    /* ==========================================
-       MAIN APP BACKGROUND
-       ========================================== */
+    /* MAIN APP BACKGROUND */
 
     .stApp {
         background: linear-gradient(
@@ -43,9 +31,7 @@ st.markdown("""
     }
 
 
-    /* ==========================================
-       MAIN CONTENT CARD
-       ========================================== */
+    /* MAIN CONTENT CARD */
 
     .main .block-container {
         background: rgba(255, 255, 255, 0.96);
@@ -61,10 +47,7 @@ st.markdown("""
             0px 8px 30px rgba(80, 90, 120, 0.12);
     }
 
-
-    /* ==========================================
-       MAIN TITLE
-       ========================================== */
+    /* MAIN TITLE */
 
     h1 {
         color: #3f4a6b !important;
@@ -79,9 +62,7 @@ st.markdown("""
     }
 
 
-    /* ==========================================
-       SUB HEADINGS
-       ========================================== */
+    /* SUB HEADINGS */
 
     h2, h3 {
         color: #596780 !important;
@@ -90,9 +71,7 @@ st.markdown("""
     }
 
 
-    /* ==========================================
-       NORMAL TEXT
-       ========================================== */
+    /* NORMAL TEXT */
 
     p {
         color: #596174;
@@ -101,9 +80,7 @@ st.markdown("""
     }
 
 
-    /* ==========================================
-       TEXT INPUT
-       ========================================== */
+    /* TEXT INPUT */
 
     .stTextInput input {
 
@@ -132,9 +109,7 @@ st.markdown("""
     }
 
 
-    /* ==========================================
-       TEXT AREA
-       ========================================== */
+    /* TEXT AREA */
 
     .stTextArea textarea {
 
@@ -163,9 +138,7 @@ st.markdown("""
     }
 
 
-    /* ==========================================
-       INPUT LABELS
-       ========================================== */
+    /*  INPUT LABELS */
 
     .stTextInput label,
     .stTextArea label {
@@ -178,9 +151,7 @@ st.markdown("""
     }
 
 
-    /* ==========================================
-       RECOMMEND BUTTON
-       ========================================== */
+    /*  RECOMMEND BUTTON */
 
     .stButton > button {
 
@@ -223,9 +194,7 @@ st.markdown("""
     }
 
 
-    /* ==========================================
-       DATAFRAME
-       ========================================== */
+    /* DATAFRAME */
 
     [data-testid="stDataFrame"] {
 
@@ -238,9 +207,7 @@ st.markdown("""
     }
 
 
-    /* ==========================================
-       DOWNLOAD BUTTON
-       ========================================== */
+    /*  DOWNLOAD BUTTON */
 
     .stDownloadButton > button {
 
@@ -271,9 +238,7 @@ st.markdown("""
     }
 
 
-    /* ==========================================
-       ALERT / WARNING
-       ========================================== */
+    /* ALERT / WARNING */
 
     [data-testid="stAlert"] {
 
@@ -281,9 +246,7 @@ st.markdown("""
     }
 
 
-    /* ==========================================
-       SPINNER
-       ========================================== */
+    /*  SPINNER */
 
     .stSpinner > div {
 
@@ -293,9 +256,7 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# =====================================================
 # SENTENCE TRANSFORMER
-# =====================================================
 
 @st.cache_resource
 def load_embedding_model():
@@ -304,10 +265,7 @@ def load_embedding_model():
 
 embedding_model = load_embedding_model()
 
-
-# =====================================================
 # CHROMADB
-# =====================================================
 
 @st.cache_resource
 def load_chromadb():
@@ -468,10 +426,7 @@ def load_chromadb():
         }
     ]
 
-
-    # =================================================
     # ADD DATA TO CHROMADB
-    # =================================================
 
     if collection.count() == 0:
 
@@ -509,10 +464,7 @@ def load_chromadb():
 
 collection = load_chromadb()
 
-
-# =====================================================
 # OLLAMA
-# =====================================================
 
 def ask_ollama(prompt):
 
@@ -530,9 +482,7 @@ def ask_ollama(prompt):
         return "ERROR: " + str(error)
 
 
-# =====================================================
 # SEARCH COURSES
-# =====================================================
 
 def search_courses(query):
 
@@ -583,10 +533,7 @@ def search_courses(query):
 
     return courses
 
-
-# =====================================================
 # COURSE RECOMMENDATION
-# =====================================================
 
 def recommend_courses(
     career,
@@ -704,10 +651,7 @@ Continue until you have 8 to 10 courses.
 
     return ask_ollama(prompt)
 
-
-# =====================================================
 # CONVERT OLLAMA OUTPUT TO DATAFRAME
-# =====================================================
 
 def recommendations_to_dataframe(recommendations):
 
@@ -777,9 +721,7 @@ def recommendations_to_dataframe(recommendations):
 
     return pd.DataFrame(courses)
 
-# =====================================================
 # USER INTERFACE
-# =====================================================
 
 st.title(
     "🗺️ AI-Powered Career Course Recommendation System"
@@ -792,40 +734,28 @@ st.write(
     "course recommendations."
 )
 
-
-# =====================================================
 # INPUT 1
-# =====================================================
 
 career = st.text_input(
     "🎯 Target Career / Job",
     placeholder="Example: Data Scientist"
 )
 
-
-# =====================================================
 # INPUT 2
-# =====================================================
 
 completed_courses = st.text_area(
     "📚 Courses Already Completed",
     placeholder="Example: Python Programming, SQL Basics"
 )
 
-
-# =====================================================
 # INPUT 3
-# =====================================================
 
 available_time = st.text_input(
     "⏳ Available Learning Time",
     placeholder="Example: 1 year"
 )
 
-
-# =====================================================
 # RECOMMEND BUTTON
-# =====================================================
 
 if st.button(
     "🚀 Recommend Courses",
@@ -849,10 +779,7 @@ if st.button(
 
         st.stop()
 
-
-    # =================================================
     # SEARCH QUERY
-    # =================================================
 
     search_query = (
         career
@@ -861,9 +788,7 @@ if st.button(
     )
 
 
-    # =================================================
     # CHROMADB SEARCH
-    # =================================================
 
     with st.spinner(
         "🔎 Finding relevant course information..."
@@ -873,10 +798,7 @@ if st.button(
             search_query
         )
 
-
-    # =================================================
     # OLLAMA RECOMMENDATION
-    # =================================================
 
     with st.spinner(
         "😂 Identifying your course recommendations..."
@@ -889,10 +811,7 @@ if st.button(
             resources
         )
 
-
-    # =================================================
     # ERROR CHECK
-    # =================================================
 
     if recommendations.startswith("ERROR"):
 
@@ -902,10 +821,7 @@ if st.button(
 
         st.stop()
 
-
-    # =================================================
     # DISPLAY RESULTS AS DATAFRAME
-    # =================================================
 
     st.subheader(
         "📚 Recommended Courses"
@@ -929,10 +845,7 @@ if st.button(
             "Unable to convert the recommendations into a table."
         )
 
-
-    # =================================================
     # DOWNLOAD
-    # =================================================
 
     download_text = (
         "AI CAREER COURSE RECOMMENDATIONS\n"
